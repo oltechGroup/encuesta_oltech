@@ -21,7 +21,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/admin/resultados")
+    fetch("http://192.168.1.220:3000/api/admin/resultados")
       .then((res) => res.json())
       .then((data) => {
         data.promedios.forEach(p => {

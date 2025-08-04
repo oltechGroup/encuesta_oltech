@@ -29,6 +29,7 @@ app.get("/", (req, res) => {
   res.send("Servidor backend funcionando");
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Backend corriendo en http://localhost:${PORT}`);
+app.listen(3000, '0.0.0.0', () => {
+  console.log("Servidor corriendo en http://0.0.0.0:3000");
 });
+

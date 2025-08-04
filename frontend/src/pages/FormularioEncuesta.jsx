@@ -19,7 +19,7 @@ export default function FormularioEncuesta() {
   useEffect(() => {
     if (!token) return;
 
-    fetch("http://localhost:3000/api/encuesta/status", {
+    fetch("http://192.168.1.220:3000/api/encuesta/status", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -28,7 +28,7 @@ export default function FormularioEncuesta() {
           setYaContesto(true);
           setCargando(false);
         } else {
-          fetch("http://localhost:3000/api/preguntas", {
+          fetch("http://192.168.1.220:3000/api/preguntas", {
             headers: { Authorization: `Bearer ${token}` },
           })
             .then((res) => res.json())
@@ -64,7 +64,7 @@ export default function FormularioEncuesta() {
       }
     }
 
-    fetch("http://localhost:3000/api/encuesta", {
+    fetch("http://192.168.1.220:3000/api/encuesta", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
