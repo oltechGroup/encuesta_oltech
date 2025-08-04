@@ -18,6 +18,14 @@ export default function Login() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!token) {
+      document.body.classList.add("login-background");
+    } else {
+      document.body.classList.remove("login-background");
+    }
+  }, [token]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,9 +58,8 @@ export default function Login() {
 
   if (token && rol === "empleado") {
     return (
-      
       <div className="bienvenida-container">
-         <header className="bienvenida-header-row">
+        <header className="bienvenida-header-row">
           <img src="/src/assets/oltech.png" alt="Logo" className="logo-bienvenida" />
           <h2 className="titulo-bienvenida">Bienvenido, Empleado</h2>
           <button className="btn-logout" onClick={handleLogout}>Cerrar sesión</button>
@@ -98,6 +105,5 @@ export default function Login() {
         <button type="submit">Ingresar</button>
       </form>
     </div>
-
   );
 }

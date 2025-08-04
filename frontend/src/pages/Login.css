@@ -1,14 +1,22 @@
-/* Login.css */
+/* Fondo solo para vista de login */
+body.login-background {
+  background: url("/41.png") no-repeat center center fixed;
+  background-size: cover; /* Esto hace que la imagen cubra toda la pantalla */
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-x: hidden;
+}
 
-
-
+/* Estilo contenedor de bienvenida (admin y empleado) */
 .bienvenida-container {
   background-color: #8fc0f1;
   min-height: 100vh;
   padding: 2rem;
 }
 
-/* Nueva estructura para el header del admin */
 .bienvenida-header-row {
   display: flex;
   align-items: center;
@@ -21,20 +29,6 @@
 .titulo-bienvenida {
   flex: 1;
   text-align: center;
-  font-size: 1.6rem;
-  color: #333;
-  margin: 0;
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.header-content h2 {
   font-size: 1.6rem;
   color: #333;
   margin: 0;
@@ -62,20 +56,20 @@
   background-color: #c82333;
 }
 
+/* Login */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #f2f2f2;
   padding: 20px;
 }
 
 .login-form {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.85); /* Blanco transparente */
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 400px;
 }
@@ -118,6 +112,7 @@
   background-color: #0056b3;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .bienvenida-header-row {
     flex-direction: column;

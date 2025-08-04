@@ -41,6 +41,13 @@ export default function AdminDashboard() {
 
   if (loading) return <p className="admin-loading">Cargando resultados...</p>;
 
+  // Ordenar observaciones por número de pregunta (ascendente)
+  const observacionesOrdenadas = [...observaciones].sort((a, b) => {
+    const numA = parseInt(a.pregunta);
+    const numB = parseInt(b.pregunta);
+    return numA - numB;
+  });
+
   return (
     <div className="admin-dashboard">
       <h1>📊 Resultados de Encuesta</h1>
@@ -141,7 +148,7 @@ export default function AdminDashboard() {
       {/* Observaciones */}
       <h2>📝 Observaciones</h2>
       <div className="observaciones">
-        {observaciones.map((obs, i) => (
+        {observacionesOrdenadas.map((obs, i) => (
           <div key={i} className="observacion-item">
             <strong>{obs.pregunta}</strong>
             <ul>
