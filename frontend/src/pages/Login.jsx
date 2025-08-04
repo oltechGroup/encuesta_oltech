@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import FormularioEncuesta from "./FormularioEncuesta";
 import AdminDashboard from "./AdminDashboard";
+import "./Login.css";
 
 export default function Login() {
   const [correo, setCorreo] = useState("");
@@ -47,13 +48,15 @@ export default function Login() {
     setContrasena("");
   };
 
-  // === Roles ===
-
   if (token && rol === "empleado") {
     return (
-      <div>
-        <h2>Bienvenido, empleado</h2>
-        <button onClick={handleLogout}>Cerrar sesión</button>
+      
+      <div className="bienvenida-container">
+         <header className="bienvenida-header-row">
+          <img src="/src/assets/oltech.png" alt="Logo" className="logo-bienvenida" />
+          <h2 className="titulo-bienvenida">Bienvenido, Empleado</h2>
+          <button className="btn-logout" onClick={handleLogout}>Cerrar sesión</button>
+        </header>
         <FormularioEncuesta />
       </div>
     );
@@ -61,43 +64,40 @@ export default function Login() {
 
   if (token && rol === "admin") {
     return (
-      <div>
-        <h2>Bienvenido, administrador</h2>
-        <button onClick={handleLogout}>Cerrar sesión</button>
+      <div className="bienvenida-container">
+        <header className="bienvenida-header-row">
+          <img src="/src/assets/oltech.png" alt="Logo" className="logo-bienvenida" />
+          <h2 className="titulo-bienvenida">Bienvenido, Administrador</h2>
+          <button className="btn-logout" onClick={handleLogout}>Cerrar sesión</button>
+        </header>
         <AdminDashboard />
       </div>
     );
   }
 
-  if (token && !["empleado", "admin"].includes(rol)) {
-    return (
-      <div>
-        <h2>No tienes acceso</h2>
-        <button onClick={handleLogout}>Cerrar sesión</button>
-      </div>
-    );
-  }
-
-  // === Formulario de login ===
-
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Iniciar Sesión</h2>
+        <label>Correo electrónico</label>
         <input
           type="email"
-          placeholder="Correo"
           value={correo}
           onChange={(e) => setCorreo(e.target.value)}
+          required
         />
+
+        <label>Contraseña</label>
         <input
           type="password"
-          placeholder="Contraseña"
           value={contrasena}
           onChange={(e) => setContrasena(e.target.value)}
+          required
         />
-        <button type="submit">Entrar</button>
+
+        <button type="submit">Ingresar</button>
       </form>
     </div>
+
   );
 }

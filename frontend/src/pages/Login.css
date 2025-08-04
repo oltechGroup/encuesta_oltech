@@ -1,0 +1,145 @@
+/* Login.css */
+
+
+
+.bienvenida-container {
+  background-color: #8fc0f1;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* Nueva estructura para el header del admin */
+.bienvenida-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f4f8;
+  padding: 1rem 2rem;
+  gap: 1rem;
+}
+
+.titulo-bienvenida {
+  flex: 1;
+  text-align: center;
+  font-size: 1.6rem;
+  color: #333;
+  margin: 0;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-content h2 {
+  font-size: 1.6rem;
+  color: #333;
+  margin: 0;
+}
+
+.logo-bienvenida {
+  width: 200px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.btn-logout {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.btn-logout:hover {
+  background-color: #c82333;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f2f2f2;
+  padding: 20px;
+}
+
+.login-form {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-form h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #444;
+  font-weight: bold;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .bienvenida-header-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .titulo-bienvenida {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .btn-logout {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form {
+    padding: 1.5rem;
+  }
+
+  .login-form h2 {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,131 @@
+/* AdminDashboard.css */
+
+.admin-dashboard {
+  padding: 2rem;
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  min-height: 100vh;
+}
+
+.admin-dashboard h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #222;
+}
+
+.admin-dashboard h2 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.admin-loading {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 3rem;
+  color: #666;
+}
+
+/* Gráfica de barras */
+.chart-container {
+  overflow-x: auto;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+
+/* Distribuciones */
+.distribuciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  justify-content: center;
+}
+
+.distribucion-item {
+  background: #fff;
+  padding: 01rem;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 350px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+
+.pie-container {
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+  height: 220px;
+  margin: 0 auto;
+}
+
+.pie-container canvas {
+  width: 100% !important;
+  height: 90% !important;
+}
+
+
+/* Observaciones */
+.observaciones {
+  margin-top: 1rem;
+}
+
+.observacion-item {
+  background: #fff;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.03);
+}
+
+.observacion-item ul {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.observacion-item li {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.distribucion-item canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+.pie-container {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .distribuciones {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chart-container {
+    padding: 0.5rem;
+  }
+
+  .admin-dashboard h1 {
+    font-size: 1.6rem;
+  }
+
+  .admin-dashboard h2 {
+    font-size: 1.2rem;
+  }
+}

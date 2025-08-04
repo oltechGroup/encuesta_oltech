@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./formulario.css";
 
 export default function FormularioEncuesta() {
   const [preguntas, setPreguntas] = useState([]);
@@ -8,7 +9,6 @@ export default function FormularioEncuesta() {
   const [mensaje, setMensaje] = useState("");
   const token = localStorage.getItem("token");
 
-  // Ocultar mensaje después de 7 segundos
   useEffect(() => {
     if (mensaje) {
       const timer = setTimeout(() => setMensaje(""), 7000);
@@ -19,7 +19,6 @@ export default function FormularioEncuesta() {
   useEffect(() => {
     if (!token) return;
 
-    // Verificar si ya contestó
     fetch("http://localhost:3000/api/encuesta/status", {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -29,7 +28,6 @@ export default function FormularioEncuesta() {
           setYaContesto(true);
           setCargando(false);
         } else {
-          // Obtener preguntas
           fetch("http://localhost:3000/api/preguntas", {
             headers: { Authorization: `Bearer ${token}` },
           })
@@ -59,7 +57,6 @@ export default function FormularioEncuesta() {
     e.preventDefault();
     setMensaje("");
 
-    // Validar que todas las preguntas tengan respuesta
     for (const pregunta of preguntas) {
       if (!respuestas[`pregunta_${pregunta.id}`]) {
         setMensaje("Por favor responde todas las preguntas.");
@@ -89,65 +86,69 @@ export default function FormularioEncuesta() {
       });
   };
 
-  if (cargando) return <p>Cargando...</p>;
+  if (cargando) return <p className="loading">Cargando...</p>;
 
   if (yaContesto)
     return (
-      <div>
-        <p>⚠️ Ya has contestado la encuesta. No puedes volver a responderla.</p>
-        <button onClick={() => window.location.reload()}>Refrescar</button>
-        {mensaje && (
-          <p style={{ color: "green", fontWeight: "bold", fontSize: "1.1rem", marginTop: "1rem" }}>
-            {mensaje}
-          </p>
-        )}
+      <div className="ya-contesto-container">
+        <p className="ya-contesto-msg">
+          ⚠️ Ya has contestado la encuesta. No puedes volver a responderla.
+        </p>
+        <button className="btn" onClick={() => window.location.reload()}>
+          Refrescar
+        </button>
+        {mensaje && <p className="mensaje success">{mensaje}</p>}
       </div>
     );
 
   return (
-    <div>
-      <h2>Encuesta para Empleados</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="form-encuesta-container">
+      <h2 className="form-title">Encuesta para Empleados</h2>
+      <form onSubmit={handleSubmit} className="form-encuesta">
         {preguntas.map((pregunta) => (
-          <div key={pregunta.id} style={{ marginBottom: "1.5rem" }}>
-            <p><strong>{pregunta.texto}</strong></p>
+          <div key={pregunta.id} className="pregunta-block">
+            <p className="pregunta-texto">
+              <strong>{pregunta.texto}</strong>
+            </p>
             {pregunta.tipo === "escala" ? (
-              [...Array(5)].map((_, i) => {
-                const val = i + 1;
-                return (
-                  <label key={val}>
-                    <input
-                      type="radio"
-                      name={`pregunta_${pregunta.id}`}
-                      value={val}
-                      checked={respuestas[`pregunta_${pregunta.id}`] === val.toString()}
-                      onChange={handleChange}
-                      required
-                    />{" "}
-                    {val}
-                  </label>
-                );
-              })
+              <div className="escala-opciones">
+                {[...Array(5)].map((_, i) => {
+                  const val = i + 1;
+                  return (
+                    <label key={val} className="radio-label">
+                      <input
+                        type="radio"
+                        name={`pregunta_${pregunta.id}`}
+                        value={val}
+                        checked={respuestas[`pregunta_${pregunta.id}`] === val.toString()}
+                        onChange={handleChange}
+                        required
+                        className="radio-input"
+                      />
+                      {val}
+                    </label>
+                  );
+                })}
+              </div>
             ) : (
               <textarea
                 name={`pregunta_${pregunta.id}`}
                 rows="3"
-                cols="60"
+                className="textarea-respuesta"
                 value={respuestas[`pregunta_${pregunta.id}`] || ""}
                 onChange={handleChange}
                 required
+                placeholder="Escribe tu respuesta aquí..."
               />
             )}
           </div>
         ))}
-        <button type="submit">Enviar Encuesta</button>
+        <button type="submit" className="btn btn-submit">
+          Enviar Encuesta
+        </button>
       </form>
 
-      {mensaje && (
-        <p style={{ color: "green", fontWeight: "bold", fontSize: "1.1rem", marginTop: "1rem" }}>
-          {mensaje}
-        </p>
-      )}
+      {mensaje && <p className="mensaje success">{mensaje}</p>}
     </div>
   );
 }

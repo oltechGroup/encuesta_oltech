@@ -10,6 +10,7 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
+import "./AdminDashboard.css"; // Importa los estilos
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcElement);
 
@@ -23,7 +24,6 @@ export default function AdminDashboard() {
     fetch("http://localhost:3000/api/admin/resultados")
       .then((res) => res.json())
       .then((data) => {
-        // Convertir promedios de string a número para evitar errores con toFixed
         data.promedios.forEach(p => {
           p.promedio = Number(p.promedio);
         });
@@ -39,127 +39,119 @@ export default function AdminDashboard() {
       });
   }, []);
 
-  if (loading) return <p>Cargando resultados...</p>;
+  if (loading) return <p className="admin-loading">Cargando resultados...</p>;
 
   return (
-    <div>
-      <h2>📊 Resultados de Encuesta</h2>
+    <div className="admin-dashboard">
+      <h1>📊 Resultados de Encuesta</h1>
 
-
-{/* Promedios */}
-<h3>Promedios por Pregunta</h3>
-<div style={{ maxHeight: "500px", overflowY: "auto", marginBottom: "2rem" }}>
-  <Bar
-    data={{
-      labels: promedios.map((p) => p.texto),
-      datasets: [
-        {
-          label: "Promedio",
-          data: promedios.map((p) => p.promedio.toFixed(2)),
-          backgroundColor: "#36a2eb",
-        },
-      ],
-    }}
-    options={{
-      indexAxis: "y",
-      maintainAspectRatio: false,
-      responsive: true,
-      scales: {
-        x: {
-          min: 1,
-          max: 5,
-          ticks: { stepSize: 1 },
-        },
-        y: {
-          ticks: {
-            autoSkip: false,
-            font: {
-              size: 10, // Tamaño más pequeño para etiquetas largas
-            },
-          },
-        },
-      },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            title: (tooltipItems) => tooltipItems[0].label,
-          },
-        },
-      },
-    }}
-    height={promedios.length * 25} // Puedes ajustar este valor si quieres más o menos altura por barra
-  />
-</div>
-
-
-
-
-
-
-
-
-
-     {/* Distribuciones */}
-<h3 style={{ marginTop: "2rem" }}>Distribución por Pregunta</h3>
-{distribuciones.map((dist) => {
-  const total = Object.values(dist.valores).reduce((a, b) => a + b, 0);
-  if (total === 0) return null;
-
-  return (
-    <div key={dist.id} style={{ marginBottom: "1.5rem" }}>
-      <strong>{dist.texto}</strong>
-      <div style={{ width: "160px", height: "160px" }}>
-        <Pie
+      {/* Promedios */}
+      <h2>Promedios por Pregunta</h2>
+      <div className="chart-container">
+        <Bar
           data={{
-            labels: ["1", "2", "3", "4", "5"],
+            labels: promedios.map((p) => p.texto),
             datasets: [
               {
-                label: "Respuestas",
-                data: [
-                  dist.valores[1],
-                  dist.valores[2],
-                  dist.valores[3],
-                  dist.valores[4],
-                  dist.valores[5],
-                ],
-                backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4bc0c0", "#9966ff"],
+                label: "Promedio",
+                data: promedios.map((p) => p.promedio.toFixed(2)),
+                backgroundColor: "#36a2eb",
               },
             ],
           }}
           options={{
-            responsive: false,
+            indexAxis: "y",
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+              x: {
+                min: 1,
+                max: 5,
+                ticks: { stepSize: 1 },
+              },
+              y: {
+                ticks: {
+                  autoSkip: false,
+                  font: { size: 10 },
+                },
+              },
+            },
             plugins: {
+              legend: { display: false },
               tooltip: {
                 callbacks: {
-                  label: (context) => {
-                    const val = context.parsed;
-                    const pct = ((val / total) * 100).toFixed(1);
-                    return `${val} respuestas (${pct}%)`;
-                  },
+                  title: (tooltipItems) => tooltipItems[0].label,
                 },
               },
             },
           }}
+          height={promedios.length * 25}
         />
       </div>
-    </div>
-  );
-})}
 
+      {/* Distribuciones */}
+      <h2>Distribución por Pregunta</h2>
+      <div className="distribuciones">
+        {distribuciones.map((dist) => {
+          const total = Object.values(dist.valores).reduce((a, b) => a + b, 0);
+          if (total === 0) return null;
+
+          return (
+            <div key={dist.id} className="distribucion-item">
+              <strong>{dist.texto}</strong>
+              <div className="pie-container">
+                <Pie
+                  data={{
+                    labels: ["1", "2", "3", "4", "5"],
+                    datasets: [
+                      {
+                        label: "Respuestas",
+                        data: [
+                          dist.valores[1],
+                          dist.valores[2],
+                          dist.valores[3],
+                          dist.valores[4],
+                          dist.valores[5],
+                        ],
+                        backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4bc0c0", "#9966ff"],
+                      },
+                    ],
+                  }}
+                  options={{
+                    responsive: false,
+                    plugins: {
+                      tooltip: {
+                        callbacks: {
+                          label: (context) => {
+                            const val = context.parsed;
+                            const pct = ((val / total) * 100).toFixed(1);
+                            return `${val} respuestas (${pct}%)`;
+                          },
+                        },
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       {/* Observaciones */}
-      <h3>📝 Observaciones</h3>
-      {observaciones.map((obs, i) => (
-        <div key={i} style={{ marginBottom: "1.5rem" }}>
-          <strong>{obs.pregunta}</strong>
-          <ul>
-            {obs.comentarios.map((c, j) => (
-              <li key={j}>{c}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <h2>📝 Observaciones</h2>
+      <div className="observaciones">
+        {observaciones.map((obs, i) => (
+          <div key={i} className="observacion-item">
+            <strong>{obs.pregunta}</strong>
+            <ul>
+              {obs.comentarios.map((c, j) => (
+                <li key={j}>{c}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

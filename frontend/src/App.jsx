@@ -1,6 +1,6 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
+import Login from '../pages/Login';
 import Encuesta from './pages/FormularioEncuesta';
 import Dashboard from './pages/AdminDashboard';
 
